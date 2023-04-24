@@ -22,6 +22,7 @@
             if($user) {
                 if($user['password'] == $hashedPassword) {
                     $_SESSION['user'] = $user;
+                    header('Location: index.php');
                     return 2;
                 } else {
                     return 1;

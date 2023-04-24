@@ -1,12 +1,14 @@
 <?php
     $title = "Sign in";
-    include 'components/header.php';
-    include 'connect.php';
-    include 'services/auth.php';
+    include_once('components/header.php');
+    include_once('connect.php');
+    include_once('services/auth.php');
 
 
     $error = '';
-
+    if(isset($_SESSION["user"])) {
+        header("Location: index.php");
+    }
 
     if(isset($_POST["signin"])) {
         $email = $_POST["email"];
@@ -47,7 +49,7 @@
                 <i class="fa-brands fa-instagram"></i>
             </div>
             <div id="login"><button type="submit" name="signin">SGIN IN</button></div>
-            <?php echo $error; ?>
+            
         </form>
         </div>
     </div>

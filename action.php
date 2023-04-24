@@ -7,12 +7,9 @@ session_start();
             unset($_SESSION['cart']);
         }
 
-
         if ($_POST['action'] == "remove") {
-            foreach ($_SESSION['cart'] as $key => $value) {
-                if ($value['id'] == $_POST['id']) {
-                    unset($_SESSION['cart'][$key]);
-                }
+            if(isset($_SESSION['cart'])){
+                unset($_SESSION['cart'][$_POST['id']]);
             }
         }
     }

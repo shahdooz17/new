@@ -1,6 +1,13 @@
 <?php
     $title = "Clothe";
+    include 'connect.php';
     include 'components/header.php';
+    include $_SERVER['DOCUMENT_ROOT'] .'/services/products.php';
+    if(isset($_GET['search'])) {
+        $products = findProduct($conn, $_GET['search']);
+    } else {
+        $products = getAllProducts($conn);
+    }
 ?>
 
 <!-- banner -->
@@ -15,204 +22,33 @@
     <!-- product cards -->
     <div class="container" id="product-cards">
         <div class="row" style="margin-top: 30px;">
-            <div class="col-md-3 py-3 py-md-0">
-                <div class="card">
-                    <img src="/public/imgs/p1.png" alt="">
-                    <div class="card-body">
-                        <h3>Girls Heel</h3>
-                        <div class="star">
-                            <i class="fas fa-star checked"></i>
-                            <i class="fas fa-star checked"></i>
-                            <i class="fas fa-star checked"></i>
-                            <i class="fas fa-star checked"></i>
-                            <i class="fas fa-star checked"></i>
-                        </div>
-                        <h5>$12.3 <strike>$15.5</strike> <span><i class="fa-solid fa-cart-shopping"></i></span></h5>
-                    </div>
-                </div>
-            </div>
-            <div class="col-md-3 py-3 py-md-0">
-                <div class="card">
-                    <img src="/public/imgs/p2.png" alt="">
-                    <div class="card-body">
-                        <h3>Men Hoodie</h3>
-                        <div class="star">
-                            <i class="fas fa-star checked"></i>
-                            <i class="fas fa-star checked"></i>
-                            <i class="fas fa-star checked"></i>
-                            <i class="fas fa-star checked"></i>
-                            <i class="fas fa-star checked"></i>
-                        </div>
-                        <h5>$3.2 <strike>$5.1</strike> <span><i class="fa-solid fa-cart-shopping"></i></span></h5>
-                    </div>
-                </div>
-            </div>
-            <div class="col-md-3 py-3 py-md-0">
-                <div class="card">
-                    <img src="/public/imgs/p3.png" alt="">
-                    <div class="card-body">
-                        <h3>Smart Watch</h3>
-                        <div class="star">
-                            <i class="fas fa-star checked"></i>
-                            <i class="fas fa-star checked"></i>
-                            <i class="fas fa-star checked"></i>
-                            <i class="fas fa-star checked"></i>
-                            <i class="fas fa-star checked"></i>
-                        </div>
-                        <h5>$50.10 <strike>$60</strike> <span><i class="fa-solid fa-cart-shopping"></i></span></h5>
-                    </div>
-                </div>
-            </div>
-            <div class="col-md-3 py-3 py-md-0">
-                <div class="card">
-                    <img src="/public/imgs/p4.png" alt="">
-                    <div class="card-body">
-                        <h3>Men T-Shirt</h3>
-                        <div class="star">
-                            <i class="fas fa-star checked"></i>
-                            <i class="fas fa-star checked"></i>
-                            <i class="fas fa-star checked"></i>
-                            <i class="fas fa-star checked"></i>
-                            <i class="fas fa-star checked"></i>
-                        </div>
-                        <h5>$10.5 <strike>$15</strike> <span><i class="fa-solid fa-cart-shopping"></i></span></h5>
-                    </div>
-                </div>
-            </div>
-        </div>
+            <?php if($products):?>
+                <?php foreach ($products as $product): ?>
+                    <div class="col-md-3 py-3 py-md-0">
+                        <div class="card">
+                            <img src="/public/imgs/products/<?= $product['image-01'] ?>" alt="">
+                            <div class="card-body">
+                                <h3><?= $product['name'] ?></h3>
+                                <div class="star">
+                                    <?php 
+                                    
+                                    for($i = 0; $i < $product['rating']; $i++) {
+                                        echo '<i class="fas fa-star checked"></i>';
+                                    }
 
-        <div class="row" style="margin-top: 30px;">
-            <div class="col-md-3 py-3 py-md-0">
-                <div class="card">
-                    <img src="/public/imgs/p5.png" alt="">
-                    <div class="card-body">
-                        <h3>Hand Bag</h3>
-                        <div class="star">
-                            <i class="fas fa-star checked"></i>
-                            <i class="fas fa-star checked"></i>
-                            <i class="fas fa-star checked"></i>
-                            <i class="fas fa-star checked"></i>
-                            <i class="fas fa-star checked"></i>
+                                    for($i = 0; $i < 5 - $product['rating']; $i++) {
+                                        echo '<i class="fas fa-star"></i>';
+                                    }
+                                    ?>
+                                </div>
+                                <h5>$<?= $product['price'] ?> <a href="/cart.php?id=<?= $product['id'] ?>"><span><i class="fa-solid fa-cart-shopping"></i></span></a></h5>
+                            </div>
                         </div>
-                        <h5>$100.5 <strike>$120.30</strike> <span><i class="fa-solid fa-cart-shopping"></i></span></h5>
                     </div>
-                </div>
-            </div>
-            <div class="col-md-3 py-3 py-md-0">
-                <div class="card">
-                    <img src="/public/imgs/p6.png" alt="">
-                    <div class="card-body">
-                        <h3>Sport Shoes</h3>
-                        <div class="star">
-                            <i class="fas fa-star checked"></i>
-                            <i class="fas fa-star checked"></i>
-                            <i class="fas fa-star checked"></i>
-                            <i class="fas fa-star checked"></i>
-                            <i class="fas fa-star checked"></i>
-                        </div>
-                        <h5>$32.50 <strike>$35.30</strike> <span><i class="fa-solid fa-cart-shopping"></i></span></h5>
-                    </div>
-                </div>
-            </div>
-
-            <div class="col-md-3 py-3 py-md-0">
-                <div class="card">
-                    <img src="/public/imgs/p7.png" alt="">
-                    <div class="card-body">
-                        <h3>Girls Heel</h3>
-                        <div class="star">
-                            <i class="fas fa-star checked"></i>
-                            <i class="fas fa-star checked"></i>
-                            <i class="fas fa-star checked"></i>
-                            <i class="fas fa-star checked"></i>
-                            <i class="fas fa-star checked"></i>
-                        </div>
-                        <h5>$20.10 <strike>$30.20</strike> <span><i class="fa-solid fa-cart-shopping"></i></span></h5>
-                    </div>
-                </div>
-            </div>
-            <div class="col-md-3 py-3 py-md-0">
-                <div class="card">
-                    <img src="/public/imgs/p8.png" alt="">
-                    <div class="card-body">
-                        <h3>Means Jeans</h3>
-                        <div class="star">
-                            <i class="fas fa-star checked"></i>
-                            <i class="fas fa-star checked"></i>
-                            <i class="fas fa-star checked"></i>
-                            <i class="fas fa-star checked"></i>
-                            <i class="fas fa-star checked"></i>
-                        </div>
-                        <h5>$65.50 <strike>$100</strike> <span><i class="fa-solid fa-cart-shopping"></i></span></h5>
-                    </div>
-                </div>
-            </div>
-        </div>
-        <div class="row" style="margin-top: 30px;">
-            <div class="col-md-3 py-3 py-md-0">
-                <div class="card">
-                    <img src="/public/imgs/p9.jpg" alt="">
-                    <div class="card-body">
-                        <h3>Dark Pant</h3>
-                        <div class="star">
-                            <i class="fas fa-star checked"></i>
-                            <i class="fas fa-star checked"></i>
-                            <i class="fas fa-star checked"></i>
-                            <i class="fas fa-star checked"></i>
-                            <i class="fas fa-star checked"></i>
-                        </div>
-                        <h5>$13.5 <strike>$15.10</strike> <span><i class="fa-solid fa-cart-shopping"></i></span></h5>
-                    </div>
-                </div>
-            </div>
-            <div class="col-md-3 py-3 py-md-0">
-                <div class="card">
-                    <img src="/public/imgs/p10.jpg" alt="">
-                    <div class="card-body">
-                        <h3>Mwalk Billies</h3>
-                        <div class="star">
-                            <i class="fas fa-star checked"></i>
-                            <i class="fas fa-star checked"></i>
-                            <i class="fas fa-star checked"></i>
-                            <i class="fas fa-star checked"></i>
-                            <i class="fas fa-star checked"></i>
-                        </div>
-                        <h5>$6.50 <strike>$10.50</strike> <span><i class="fa-solid fa-cart-shopping"></i></span></h5>
-                    </div>
-                </div>
-            </div>
-            <div class="col-md-3 py-3 py-md-0">
-                <div class="card">
-                    <img src="/public/imgs/p11.jpg" alt="">
-                    <div class="card-body">
-                        <h3>Sweet Shirt</h3>
-                        <div class="star">
-                            <i class="fas fa-star checked"></i>
-                            <i class="fas fa-star checked"></i>
-                            <i class="fas fa-star checked"></i>
-                            <i class="fas fa-star checked"></i>
-                            <i class="fas fa-star checked"></i>
-                        </div>
-                        <h5>$10.5 <strike>$15.50</strike> <span><i class="fa-solid fa-cart-shopping"></i></span></h5>
-                    </div>
-                </div>
-            </div>
-            <div class="col-md-3 py-3 py-md-0">
-                <div class="card">
-                    <img src="/public/imgs/p12.jpg" alt="">
-                    <div class="card-body">
-                        <h3>Black T-Shirt</h3>
-                        <div class="star">
-                            <i class="fas fa-star checked"></i>
-                            <i class="fas fa-star checked"></i>
-                            <i class="fas fa-star checked"></i>
-                            <i class="fas fa-star checked"></i>
-                            <i class="fas fa-star checked"></i>
-                        </div>
-                        <h5>$5.1 <strike>$6.50</strike> <span><i class="fa-solid fa-cart-shopping"></i></span></h5>
-                    </div>
-                </div>
-            </div>
+                <?php endforeach;?>
+            <?php else: ?>
+                <h1>No products found</h1>
+            <?php endif; ?>
         </div>
     </div>
     <!-- product cards -->

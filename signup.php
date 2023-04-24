@@ -5,6 +5,9 @@
     include 'services/auth.php';
 
     $error = '';
+    if(isset($_SESSION["user"])) {
+        header("Location: index.php");
+    }
 
     if(isset($_POST["signup"])) {
         $name = $_POST["name"];

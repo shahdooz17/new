@@ -2,6 +2,14 @@
     $title ="cart";
     include 'components/header.php';
     include 'connect.php';
+	include 'services/products.php';
+	include 'services/cart.php';
+	if(isset($_GET['id'])) {
+		$id = $_GET['id'];
+		$product = findProductById($conn, $id);
+		addProduct($product['id'], $product['name'], $product['price']);
+		header('Location: /cart.php');
+	}
 ?>
 
 <!DOCTYPE html>
@@ -76,7 +84,7 @@
 							<td>Total Price</td>
 							<td><?php echo number_format($total_price,2); ?></td>
 							<td>
-								<button class="form-submit-button">Clear All</button>
+								<button class="form-submit-button clearall">Clear All</button>
                             </td>
 						</tr>
 			</table>
@@ -92,32 +100,22 @@
 
 		$(".remove").click(function(){
             var id = $(this).attr("id");
-                
-                var action = "remove";
-
-                $.ajax({
-                method:"POST",
-                url:"action.php",
-                data:{action:action,id:id},
-                success:function(data){
-                    alert("you have Remove item with ID "+id+"");
-                }
-            });
+			$.post({
+				url: "/action.php",
+				data: {action: "remove", id: id},
+			}, function(){
+				location.reload();
+			}());
 		});
         
 
         $(".clearall").click(function(){
-
-                var action = "clear";
-
-            $.ajax({
-                method:"POST",
-                url:"action.php",
-                data:{action:action},
-                success:function(data){
-                    alert("you have cleared all item");
-                }
-            });
+			$.post({
+				url: "/action.php",
+				data: {action: "clear"},
+			}, function(){
+				location.reload();
+			}());
         });
 	});
 </script>
