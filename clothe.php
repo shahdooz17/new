@@ -25,25 +25,28 @@
             <?php if($products):?>
                 <?php foreach ($products as $product): ?>
                     <div class="col-md-3 py-3 py-md-0">
-                        <div class="card">
-                            <img src="/public/imgs/products/<?= $product['image'] ?>"alt="">
-                            <div class="card-body">
-                                <h3><?= $product['name'] ?></h3>
-                                <div class="star">
-                                    <?php 
-                                    
-                                    for($i = 0; $i < $product['rating']; $i++) {
-                                        echo '<i class="fas fa-star checked"></i>';
-                                    }
+                            <div class="card">
+                                <a class="text-decoration-none text-dark" href="/sproduct.php?id=<?= $product['id'] ?>">
+                                <img class="img-fluid" src="/public/imgs/products/<?= $product['image'] ?>"alt="">
+                                <div class="card-body">
+                                    <h3><?= $product['name'] ?></h3>
+                                    <div class="star">
+                                        <?php 
+                                        
+                                        for($i = 0; $i < $product['rating']; $i++) {
+                                            echo '<i class="fas fa-star checked"></i>';
+                                        }
 
-                                    for($i = 0; $i < 5 - $product['rating']; $i++) {
-                                        echo '<i class="fas fa-star"></i>';
-                                    }
-                                    ?>
+                                        for($i = 0; $i < 5 - $product['rating']; $i++) {
+                                            echo '<i class="fas fa-star"></i>';
+                                        }
+                                        ?>
+                                    </div>
+                                    <h5>$<?= $product['price'] ?> <a href="/cart.php?id=<?= $product['id'] ?>"><span><i class="fa-solid fa-cart-shopping"></i></span></a></h5>
                                 </div>
-                                <h5>$<?= $product['price'] ?> <a href="/cart.php?id=<?= $product['id'] ?>"><span><i class="fa-solid fa-cart-shopping"></i></span></a></h5>
+                                </a>
                             </div>
-                        </div>
+                        
                     </div>
                 <?php endforeach;?>
             <?php else: ?>

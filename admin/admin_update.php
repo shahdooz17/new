@@ -134,21 +134,20 @@ if (isset($_POST['update_product'])) {
             <div class="add-product-form centered">
 			<section>
                 <?php
-                $select =$conn->prepare("SELECT * FROM products WHERE id=$id ");
-                $select->execute();
-                $result=$select->fetchAll(PDO::FETCH_ASSOC);
-                while($result){
+                $stmt =$conn->query("SELECT * FROM products WHERE id= {$id} LIMIT 1")->fetchAll();
+
+				foreach($stmt as $result){
                 ?>
-				<form action="<?php $_SERVER['PHP_SELF']?>" method="post" enctype ="multipart/form-data">
-					<h3>Update the product</h3>
-					<input type="text" name="product_name" value="<?php $result['name'];?>" placeholder="enter the product name" class="box" required>
-					<input type="number" name="product_price" min="0" value="<?php $result['price'];?>" placeholder="enter the product price" class="box" required>
-					<input type="number" name="product_rating" min="0" value="<?php $result['rating'];?>" placeholder="enter the product rating out of 5" class="box" required>
-					<input type="file" name="product_image" accept="image/png, image/jpg, image/jpeg" class="box" required>
-					<input type="submit" value="Update the product" name="update_product" class="btn">
-                    <a href ="mystore.php" class="btn">Go back</a>
-				</form>
-                <?php}?>
+					<form action="<?php $_SERVER['PHP_SELF']?>" method="post" enctype ="multipart/form-data">
+						<h3>Update the product</h3>
+						<input type="text" name="product_name" value="<?= $result['name'];?>" placeholder="enter the product name" class="box" required>
+						<input type="number" name="product_price" min="0" value="<?= $result['price'];?>" placeholder="enter the product price" class="box" required>
+						<input type="number" name="product_rating" min="0" value="<?= $result['rating'];?>" placeholder="enter the product rating out of 5" class="box" required>
+						<input type="file" name="product_image" accept="image/png, image/jpg, image/jpeg" class="box" required>
+						<input type="submit" value="Update the product" name="update_product" class="btn">
+						<a href ="mystore.php" class="btn">Go back</a>
+					</form>
+				<?php } ?>
 			</section>
             </div>
 		</div>

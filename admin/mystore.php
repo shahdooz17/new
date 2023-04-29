@@ -1,11 +1,33 @@
 <?php
 include 'functions.php';
 $title = "my store";
+function uploadImg() {
+    $myImagesDir = $_SERVER["DOCUMENT_ROOT"] .'/public/imgs/products/';
+    $myImageFile = $myImagesDir . htmlspecialchars(basename($_FILES["product_image"]["name"]));
+    $image_File_Type = strtolower(pathinfo($myImageFile,PATHINFO_EXTENSION));
+    if($_FILES["product_image"]["tmp_name"] == "" || $_FILES["product_image"]["tmp_name"] == null || !isset($_FILES["product_image"]["tmp_name"])) {
+        return false;
+    }
+    if(file_exists($myImageFile)) {
+        return htmlspecialchars( basename( $_FILES["product_image"]["name"]));
+    }
+    if($_FILES["product_image"]["size"] >= 600000) {
+        return false;
+    }
+    if($image_File_Type != "jpg" && $image_File_Type != "png" && $image_File_Type != "jpeg" && $image_File_Type != "gif" ) {
+        return false;
+    }
+    if(!move_uploaded_file($_FILES["product_image"]["tmp_name"], $myImageFile)) {
+        return false;
+    }
+    return htmlspecialchars( basename( $_FILES["product_image"]["name"]));
+}
 if (isset($_POST['add_product'])) {
     $product_name = $_POST['product_name'];
     $product_price = $_POST['product_price'];
 	$product_rating = $_POST['product_rating'];
     $product_image = $_FILES['product_image'];
+	uploadImg() ? $product_image = uploadImg() : $product_image = 'default.png';
 
     if (empty($product_name) || empty($product_price) || empty($product_image) || empty($product_rating)) {
         $message[] = 'please fill all the required info';
@@ -13,7 +35,7 @@ if (isset($_POST['add_product'])) {
         // Use prepared statement to prevent SQL injection
         $insert = "INSERT INTO products(name, price, rating, image) VALUES(:name, :price, :rating, :image)";
         $stmt = $conn->prepare($insert);
-        $stmt->execute(['name' => $product_name, 'price' => $product_price,'rating' =>$product_rating,'image' => $product_image['name']]);
+        $stmt->execute(['name' => $product_name, 'price' => $product_price,'rating' =>$product_rating,'image' => $product_image]);
 		header("Location: mystore.php");
         if ($stmt->rowCount() > 0) {
             $message[] = 'new product added successfully';
@@ -165,7 +187,7 @@ if (isset($_POST['add_product'])) {
 					while($row = $select->fetch(PDO::FETCH_ASSOC)){
 					?>
 					<tr>
-						<td><img src="../public/imgs/products/<?php $row['image'];?>" height="100" alt=""></td>
+						<td><img src="/public/imgs/products/<?= $row['image'];?>" height="100" alt=""></td>
 						<td><?php echo $row['name'];?></td>
 						<td><?php echo $row['price'];?></td>
 						<td><?php echo $row['rating'];?></td>
