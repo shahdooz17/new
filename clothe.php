@@ -26,7 +26,7 @@
                 <?php foreach ($products as $product): ?>
                     <div class="col-md-3 py-3 py-md-0">
                         <div class="card">
-                            <img src="/public/imgs/products/<?= $product['image-01'] ?>" alt="">
+                            <img src="/public/imgs/products/<?= $product['image'] ?>"alt="">
                             <div class="card-body">
                                 <h3><?= $product['name'] ?></h3>
                                 <div class="star">

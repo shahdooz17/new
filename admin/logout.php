@@ -1,15 +1,39 @@
 <?php 
-session_start();
-
-function title() {
-    global $title;
-    if(isset($title))
-        echo $title;
-    else
-        echo 'Home';
+include 'functions.php';
+    $title="login";
+    $error='';
+    if(isset($_POST['signin'])) {
+        $email = $_POST['email'];
+        $password = $_POST['password'];
+        $error='';
+        $result = signin($conn, $email, $password);
+        if($result == 0) {
+            $error = "User is not found";
+        } else if($result == 1) {
+            $error = "Password is incorrect";
+        } else if($result == 2) {
+            $error = "You are logged in";
+        } else {
+            $error = "Something went wrong";
+        }
 }
+if(isset($_POST['signup'])) {
+    $username = $_POST['username'];
+    $email = $_POST['email'];
+    $password = $_POST['password'];
+    $error='';
+    $result= signup($conn,$username, $email, $password);
+    if($result == 2) {
+        $error = "Account created successfully";
+    } else if($result == 0) {
+        $error = "There is user with that email";
 
-    $title="login"?>
+    } else {
+        $error = "Something went wrong";
+    }
+    exit();
+}
+?>
 <!DOCTYPE html>
 <!-- Coding by CodingLab | www.codinglabweb.com-->
     <html lang="en">
@@ -43,10 +67,14 @@ function title() {
                         <div class="form-link">
                             <a href="#" class="forgot-pass">Forgot password?</a>
                         </div>
+                        <?php if(isset($error)): ?>
+                    <p><?php echo $error; ?></p>
+                        <?php endif; ?>
+
 
 
                         <div class="field button-field">
-                            <button>Login</button>
+                            <button type="submit" name="signin">Login</button>
                         </div>
                     </form>
 
@@ -68,13 +96,6 @@ function title() {
                 </div>
 
 
-                <div class="media-options">
-                    <a href="#" class="field google">
-                        <img src="#" alt="" class="google-img">
-                        <span>Login with Google</span>
-                    </a>
-                </div>
-
 
             </div>
 
@@ -92,18 +113,19 @@ function title() {
 
 
                         <div class="field input-field">
-                            <input type="password" placeholder="Create password" class="password">
+                            <input type="text" placeholder="Username" class="password">
                         </div>
 
 
                         <div class="field input-field">
-                            <input type="password" placeholder="Confirm password" class="password">
+                            <input type="password" placeholder="password" class="password">
                             <i class='bx bx-hide eye-icon'></i>
                         </div>
 
 
                         <div class="field button-field">
-                            <button>Signup</button>
+                            <button type="submit" name="signup">Signup</button>
+                            <?php echo $error; ?>
                         </div>
                     </form>
 
@@ -125,12 +147,7 @@ function title() {
                 </div>
 
 
-                <div class="media-options">
-                    <a href="#" class="field google">
-                        <img src="#" alt="" class="google-img">
-                        <span>Login with Google</span>
-                    </a>
-                </div>
+
 
 
             </div>

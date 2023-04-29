@@ -1,13 +1,5 @@
 <?php
-session_start();
-
-function title() {
-    global $title;
-    if(isset($title))
-        echo $title;
-    else
-        echo 'Home';
-}
+	include 'functions.php';
     $title="settings";?>
 
 <!DOCTYPE html>

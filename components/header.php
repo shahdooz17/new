@@ -24,6 +24,7 @@ function css() {
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="shortcut icon" type="image" href="./image/logo2.png">
+    <link rel="stylesheet" href="/public/css/profile.css">
     <link rel="stylesheet" href="/public/css/style.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.2.0/css/all.min.css">
     <!-- bootstrap links -->
@@ -52,7 +53,7 @@ function css() {
                     echo '<button id="btn-signup"><a href="signup.php">Sign up</a></button>';
                 }
             ?>
-            <i class="fa-solid fa-user"></i>
+            <i class="fa-solid fa-user" href="profile.php"></i>
             <i class="fa-solid fa-cart-shopping"></i>
         </div>
     </div>

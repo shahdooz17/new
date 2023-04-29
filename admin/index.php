@@ -1,15 +1,6 @@
 <?php
-
-session_start();
-
-function title() {
-    global $title;
-    if(isset($title))
-        echo $title;
-    else
-        echo 'Home';
-}
-    $title="index";
+	include 'functions.php';
+	$title="index";
     ?>
 <!DOCTYPE html>
 <html lang="en">

@@ -1,7 +1,8 @@
 <?php
 include 'functions.php';
 $title = "my store";
-if (isset($_POST['add_product'])) {
+$id = $_GET['edit'];
+if (isset($_POST['update_product'])) {
     $product_name = $_POST['product_name'];
     $product_price = $_POST['product_price'];
 	$product_rating = $_POST['product_rating'];
@@ -11,25 +12,20 @@ if (isset($_POST['add_product'])) {
         $message[] = 'please fill all the required info';
     } else {
         // Use prepared statement to prevent SQL injection
-        $insert = "INSERT INTO products(name, price, rating, image) VALUES(:name, :price, :rating, :image)";
-        $stmt = $conn->prepare($insert);
+        $update = "UPDATE INTO products SET name='$product_name', price='$product_price', rating='$product_rating', image='$product_image' 
+        WHERE id= $id ";
+        $stmt = $conn->prepare($update);
         $stmt->execute(['name' => $product_name, 'price' => $product_price,'rating' =>$product_rating,'image' => $product_image['name']]);
-		header("Location: mystore.php");
         if ($stmt->rowCount() > 0) {
-            $message[] = 'new product added successfully';
+            $message[] = 'product updated successfully';
         } else {
-            $message[] = 'could not add the product';
+            $message[] = 'could not update the product';
         }
     }
-};
-	if(isset($_GET['delete'])){
-		$id = $_GET['delete'];
-		$stmt = $conn->prepare("DELETE FROM products WHERE id = :id");
-		$stmt->bindParam(':id', $id, PDO::PARAM_INT);
-		$stmt->execute();
-		header('location:mystore.php');
-}
-?>
+};?>
+
+
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -40,10 +36,9 @@ if (isset($_POST['add_product'])) {
 	<link href='https://unpkg.com/boxicons@2.0.9/css/boxicons.min.css' rel='stylesheet'>
 	<!-- My CSS -->
 	<link rel="stylesheet" href="../public/css/admin.css">
-	<link rel="stylesheet" href="../public/css/mystore.css">
+    <link rel="stylesheet" href="../public/css/mystore.css">
 	<style>
 		@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@100;200;300;400;500;600&display=swap');
-
 	</style>
 	<title>AdminHub</title>
 </head>
@@ -136,51 +131,26 @@ if (isset($_POST['add_product'])) {
 		
 		?>
 		<div class="container">
+            <div class="add-product-form centered">
 			<section>
-				<form action="" method="post" class="add-product-form" enctype ="multipart/form-data">
-					<h3>Add a new product</h3>
-					<input type="text" name="product_name" placeholder="enter the product name" class="box" required>
-					<input type="number" name="product_price" min="0" placeholder="enter the product price" class="box" required>
-					<input type="number" name="product_rating" min="0" placeholder="enter the product rating out of 5" class="box" required>
+                <?php
+                $select =$conn->prepare("SELECT * FROM products WHERE id=$id ");
+                $select->execute();
+                $result=$select->fetchAll(PDO::FETCH_ASSOC);
+                while($result){
+                ?>
+				<form action="<?php $_SERVER['PHP_SELF']?>" method="post" enctype ="multipart/form-data">
+					<h3>Update the product</h3>
+					<input type="text" name="product_name" value="<?php $result['name'];?>" placeholder="enter the product name" class="box" required>
+					<input type="number" name="product_price" min="0" value="<?php $result['price'];?>" placeholder="enter the product price" class="box" required>
+					<input type="number" name="product_rating" min="0" value="<?php $result['rating'];?>" placeholder="enter the product rating out of 5" class="box" required>
 					<input type="file" name="product_image" accept="image/png, image/jpg, image/jpeg" class="box" required>
-					<input type="submit" value="Add the product" name="add_product" class="btn">
+					<input type="submit" value="Update the product" name="update_product" class="btn">
+                    <a href ="mystore.php" class="btn">Go back</a>
 				</form>
+                <?php}?>
 			</section>
-		</div>
-		<?php
-		$query = "SELECT * FROM PRODUCTS";
-		$select = $conn->query($query);
-		?>
-		<div class="product-display">
-			<table class="product-display-table">
-				<thead>
-					<tr>
-						<th>Product image</th>
-						<th>Product name</th>
-						<th>Product price</th>
-						<th>Product rating</th>
-						<th colspan="2">action</th>
-					</tr>
-					<?php
-					while($row = $select->fetch(PDO::FETCH_ASSOC)){
-					?>
-					<tr>
-						<td><img src="../public/imgs/products/<?php $row['image'];?>" height="100" alt=""></td>
-						<td><?php echo $row['name'];?></td>
-						<td><?php echo $row['price'];?></td>
-						<td><?php echo $row['rating'];?></td>
-						<td>
-							<a href="admin_update.php?edit=<?php echo $row['id'];?>" class="btn"><i class="fas fa-edit"></i>edit</a>
-							<a href="mystore.php?delete=<?php echo $row['id'];?>" class="btn"><i class="fas fa-trash"></i>delete</a>
-						</td>
-
-					</tr>
-					<?php };?>
-				</thead>
-
-
-			</table>
-
+            </div>
 		</div>
 		<!-- MAIN -->
 	</section>
