@@ -3,20 +3,41 @@ include 'functions.php';
 $title = "my store";
 $id = $_GET['edit'];
 
+function uploadImg() {
+    $myImagesDir = $_SERVER["DOCUMENT_ROOT"] .'/public/imgs/products/';
+    $myImageFile = $myImagesDir . htmlspecialchars(basename($_FILES["product_image"]["name"]));
+    $image_File_Type = strtolower(pathinfo($myImageFile,PATHINFO_EXTENSION));
+    if($_FILES["product_image"]["tmp_name"] == "" || $_FILES["product_image"]["tmp_name"] == null || !isset($_FILES["product_image"]["tmp_name"])) {
+        return false;
+    }
+    if(file_exists($myImageFile)) {
+        return htmlspecialchars( basename( $_FILES["product_image"]["name"]));
+    }
+    if($_FILES["product_image"]["size"] >= 600000) {
+        return false;
+    }
+    if($image_File_Type != "jpg" && $image_File_Type != "png" && $image_File_Type != "jpeg" && $image_File_Type != "gif" ) {
+        return false;
+    }
+    if(!move_uploaded_file($_FILES["product_image"]["tmp_name"], $myImageFile)) {
+        return false;
+    }
+    return htmlspecialchars( basename( $_FILES["product_image"]["name"]));
+}
+
 if (isset($_POST['update_product'])) {
     $product_name = $_POST['product_name'];
     $product_price = $_POST['product_price'];
 	$product_rating = $_POST['product_rating'];
-    $product_image = $_FILES['product_image'];
-
+    uploadImg() ? $product_image = uploadImg() : (isset($_POST['product_image_old']) ?  $product_image = $_POST['product_image_old'] : $product_image = 'default.png');
+	echo $product_image;
     if (empty($product_name) || empty($product_price) || empty($product_image) || empty($product_rating)) {
         $message[] = 'please fill all the required info';
     } else {
         // Use prepared statement to prevent SQL injection
-        $update = "UPDATE INTO products SET name='$product_name', price='$product_price', rating='$product_rating', image='$product_image' 
+        $update = "UPDATE products SET name='$product_name', price='$product_price', rating='$product_rating', image='$product_image' 
         WHERE id= $id ";
-        $stmt = $conn->prepare($update);
-        $stmt->execute(['name' => $product_name, 'price' => $product_price,'rating' =>$product_rating,'image' => $product_image['name']]);
+        $stmt = $conn->query($update);
         if ($stmt->rowCount() > 0) {
             $message[] = 'product updated successfully';
         } else {
@@ -139,7 +160,8 @@ if (isset($_POST['update_product'])) {
 						<input type="text" name="product_name" value="<?= $result['name'];?>" placeholder="enter the product name" class="box" required>
 						<input type="number" name="product_price" min="0" value="<?= $result['price'];?>" placeholder="enter the product price" class="box" required>
 						<input type="number" name="product_rating" min="0" value="<?= $result['rating'];?>" placeholder="enter the product rating out of 5" class="box" required>
-						<input type="file" name="product_image" accept="image/png, image/jpg, image/jpeg" class="box" required>
+						<input type="hidden" name="product_image_old" value="<?= $result['image'];?>" class="box">
+						<input type="file" name="product_image" accept="image/png, image/jpg, image/jpeg" class="box">
 						<input type="submit" value="Update the product" name="update_product" class="btn">
 						<a href ="mystore.php" class="btn">Go back</a>
 					</form>
