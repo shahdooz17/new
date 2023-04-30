@@ -1,29 +1,35 @@
 <?php
 include 'functions.php';
 $title = "my store";
-$id = $_GET['edit'];
+$messages= [];
+if(isset($_GET['edit'])) {
+	$id = $_GET['edit'];
 
-if (isset($_POST['update_product'])) {
-    $product_name = $_POST['product_name'];
-    $product_price = $_POST['product_price'];
-	$product_rating = $_POST['product_rating'];
-    $product_image = $_FILES['product_image'];
+	if (isset($_POST['update_message'])) {
+		$name = filter_input(INPUT_POST, 'name', FILTER_SANITIZE_STRING);
+        $email = filter_input(INPUT_POST, 'email', FILTER_SANITIZE_STRING);
+        $message = filter_input(INPUT_POST, 'message', FILTER_SANITIZE_STRING);
+        $date = filter_input(INPUT_POST, 'date', FILTER_SANITIZE_STRING) ?? date("Y-m-d");
+        $sqlOrder = "UPDATE messages SET name='$name', email='$email', messages='$message', date='$date' WHERE id='$id'";
+		if (!$conn->query($sqlOrder)) {
+			$messages[0] = 'Could not update the message';
+		} else {
+			$messages[0] = 'Message updated successfully';
+		}
+	}
+} else if(isset($_GET['delete'])) {
+	$id = $_GET['delete'];
+	$sqlOrder = "DELETE FROM messages WHERE id='$id'";
+	if (!$conn->query($sqlOrder)) {
+		$messages[0] = 'Could not delete the message';
+	} else {
+		$messages[0] = 'Message deleted successfully';
+	}
+} else {
+	header('Location: messages.php');
+}
 
-    if (empty($product_name) || empty($product_price) || empty($product_image) || empty($product_rating)) {
-        $message[] = 'please fill all the required info';
-    } else {
-        // Use prepared statement to prevent SQL injection
-        $update = "UPDATE INTO products SET name='$product_name', price='$product_price', rating='$product_rating', image='$product_image' 
-        WHERE id= $id ";
-        $stmt = $conn->prepare($update);
-        $stmt->execute(['name' => $product_name, 'price' => $product_price,'rating' =>$product_rating,'image' => $product_image['name']]);
-        if ($stmt->rowCount() > 0) {
-            $message[] = 'product updated successfully';
-        } else {
-            $message[] = 'could not update the product';
-        }
-    }
-};?>
+?>
 
 
 
@@ -118,8 +124,8 @@ if (isset($_POST['update_product'])) {
 
 		<!-- MAIN -->
 		<?php
-			if(isset($message)){
-				foreach($message as $message){
+			if(isset($messages)){
+				foreach($messages as $message){
 					echo '<span class="message">'.$message.'</span>';
 				}
 			}
@@ -130,18 +136,17 @@ if (isset($_POST['update_product'])) {
             <div class="add-product-form centered">
 			<section>
                 <?php
-                $stmt =$conn->query("SELECT * FROM products WHERE id= {$id} LIMIT 1")->fetchAll();
+                $stmt =$conn->query("SELECT * FROM messages WHERE id= {$id} LIMIT 1")->fetchAll();
 
-				foreach($stmt as $result){
-                ?>
+				foreach($stmt as $result) { ?>
 					<form action="<?php $_SERVER['PHP_SELF']?>" method="post" enctype ="multipart/form-data">
-						<h3>Update the product</h3>
-						<input type="text" name="product_name" value="<?= $result['name'];?>" placeholder="enter the product name" class="box" required>
-						<input type="number" name="product_price" min="0" value="<?= $result['price'];?>" placeholder="enter the product price" class="box" required>
-						<input type="number" name="product_rating" min="0" value="<?= $result['rating'];?>" placeholder="enter the product rating out of 5" class="box" required>
-						<input type="file" name="product_image" accept="image/png, image/jpg, image/jpeg" class="box" required>
-						<input type="submit" value="Update the product" name="update_product" class="btn">
-						<a href ="mystore.php" class="btn">Go back</a>
+						<h3>Update the message</h3>
+                        <input type="text" name="name" placeholder="enter the name" value="<?= $result['name'] ?>" class="box" required>
+					    <input type="email" name="email" placeholder="enter the email" class="box" value="<?= $result['email'] ?>" required>
+					    <input type="number" name="number" placeholder="enter the phone number" class="box" value="<?= $result['number'] ?>" required>
+					    <textarea class="box" name="message" row="3" required placeholder="enter the message"><?= $result['messages'] ?></textarea>
+						<input type="submit" value="Update the message" name="update_message" class="btn">
+						<a href ="messages.php" class="btn">Go back</a>
 					</form>
 				<?php } ?>
 			</section>

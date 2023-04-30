@@ -87,7 +87,7 @@
 								<button class="form-submit-button clearall">Clear All</button>
                             </td>
 							<td>
-								<button class="form-submit-button clearall"><a href="checkout.php">checkout</a></button>
+								<button class="form-submit-button"><a href="checkout.php">checkout</a></button>
                             </td>
 						</tr>
 			</table>

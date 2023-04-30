@@ -1,6 +1,23 @@
 <?php
     $title = "Contact us";
     include 'components/header.php';
+    include 'connect.php';
+
+    $messages = [];
+
+    if(isset($_POST['message'])) {
+        $name = filter_input(INPUT_POST, 'name', FILTER_SANITIZE_STRING);
+        $email = filter_input(INPUT_POST, 'email', FILTER_SANITIZE_EMAIL);
+        $message = filter_input(INPUT_POST, 'message', FILTER_SANITIZE_STRING);
+        $number = filter_input(INPUT_POST, 'number', FILTER_SANITIZE_NUMBER_INT);
+        $date = date("Y-m-d");
+        $sqlMessage = "INSERT INTO messages (name, email,number, messages, date) VALUES ('$name', '$email', '$number', '$message', '$date')";
+        if(!$conn->query($sqlMessage)) {
+            $messages[0] = 'Could not add the message';
+        } else {
+            $messages[0] = 'Message added successfully';
+        }
+    }
 ?>
 
 <!-- contact -->
@@ -26,21 +43,31 @@
             </div>
         </div>
     </div>
-
+    <form action="<?php $_SERVER['PHP_SELF']?>" method="post">
     <div class="row" style="margin-top: 30px;">
         <div class="col-md-4 py-3 py-md-0">
-            <input type="text" class="form-control form-control" placeholder="Name">
+            <input type="text" name="name" class="form-control form-control" placeholder="Name">
         </div>
         <div class="col-md-4 py-3 py-md-0">
-            <input type="text" class="form-control form-control" placeholder="Email">
+            <input type="text" name="email" class="form-control form-control" placeholder="Email">
         </div>
         <div class="col-md-4 py-3 py-md-0">
-            <input type="number" class="form-control form-control" placeholder="Phone">
+            <input type="number" name="number" class="form-control form-control" placeholder="Phone">
         </div>
         <div class="form-group" style="margin-top: 30px;">
-        <textarea class="form-control" id=""rows="5" placeholder="Message"></textarea>
+        <textarea class="form-control" name="message" id=""rows="5" placeholder="Message"></textarea>
     </div>
-    <div id="messagebtn" class="text-center"><button>Message</button></div>
+    <div id="messagebtn" class="text-center"><button type="submit">Message</button></div>
+        <?php 
+        
+        if(!empty($messages)) {
+            foreach($messages as $message) {
+                echo "<div class='alert alert-danger'>$message</div>";
+            }
+        }
+        
+        ?>
+</form>
     </div>
 </div>
 <!-- contact -->

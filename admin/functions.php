@@ -1,6 +1,10 @@
 <?php
 session_start();
 
+if(!isset($_SESSION['admin'])){
+	header('location: /signin.php');
+}
+
 function title() {
     global $title;
     if(isset($title))

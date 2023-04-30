@@ -67,7 +67,8 @@
         <div class="row" style="margin-top: 30px;">
             <div class="col-md-3 py-3 py-md-0">
                 <div class="card">
-                    <img src="/public/imgs/p13.png" alt="">
+                <a class="text-decoration-none text-dark" href="/clothe.php">
+                    <img class="img-fluid" src="/public/imgs/p13.png" alt="">
                     <div class="card-body">
                         <h3>Men T-Shirt</h3>
                         <div class="star">
@@ -79,11 +80,13 @@
                         </div>
                         <h5>$32.60 <strike>$50</strike> <span><i class="fa-solid fa-cart-shopping"></i></span></h5>
                     </div>
+                </a>
                 </div>
             </div>
             <div class="col-md-3 py-3 py-md-0">
                 <div class="card">
-                    <img src="/public/imgs/p14.png" alt="">
+                    <a class="text-decoration-none text-dark" href="/clothe.php">
+                    <img class="img-fluid" src="/public/imgs/p14.png" alt="">
                     <div class="card-body">
                         <h3>Purple Heel</h3>
                         <div class="star">
@@ -95,11 +98,13 @@
                         </div>
                         <h5>$56.50 <strike>$60</strike> <span><i class="fa-solid fa-cart-shopping"></i></span></h5>
                     </div>
+</a>
                 </div>
             </div>
             <div class="col-md-3 py-3 py-md-0">
                 <div class="card">
-                    <img src="/public/imgs/p15.png" alt="">
+                    <a class="text-decoration-none text-dark" href="/clothe.php">
+                    <img class="img-fluid" src="/public/imgs/p15.png" alt="">
                     <div class="card-body">
                         <h3>Men Shoes</h3>
                         <div class="star">
@@ -111,11 +116,13 @@
                         </div>
                         <h5>$150.5 <strike>$160.50</strike> <span><i class="fa-solid fa-cart-shopping"></i></span></h5>
                     </div>
+</a>
                 </div>
             </div>
             <div class="col-md-3 py-3 py-md-0">
                 <div class="card">
-                    <img src="/public/imgs/p16.png" alt="">
+                    <a class="text-decoration-none text-dark" href="/clothe.php">
+                    <img class="img-fluid" src="/public/imgs/p16.png" alt="">
                     <div class="card-body">
                         <h3>Men Jacket</h3>
                         <div class="star">
@@ -127,6 +134,7 @@
                         </div>
                         <h5>$50.60 <strike>$56.90</strike> <span><i class="fa-solid fa-cart-shopping"></i></span></h5>
                     </div>
+</a>
                 </div>
             </div>
         </div>
@@ -134,7 +142,8 @@
         <div class="row" style="margin-top: 30px;">
             <div class="col-md-3 py-3 py-md-0">
                 <div class="card">
-                    <img src="/public/imgs/p17.png" alt="">
+                    <a class="text-decoration-none text-dark" href="/clothe.php">
+                    <img class="img-fluid" src="/public/imgs/p17.png" alt="">
                     <div class="card-body">
                         <h3>Blue T-Shirt</h3>
                         <div class="star">
@@ -146,11 +155,13 @@
                         </div>
                         <h5>$5.60 <strike>$10.50</strike> <span><i class="fa-solid fa-cart-shopping"></i></span></h5>
                     </div>
+</a>
                 </div>
             </div>
             <div class="col-md-3 py-3 py-md-0">
                 <div class="card">
-                    <img src="/public/imgs/p18.png" alt="">
+                    <a class="text-decoration-none text-dark" href="/clothe.php">
+                    <img class="img-fluid" src="/public/imgs/p18.png" alt="">
                     <div class="card-body">
                         <h3>Girls Sandal</h3>
                         <div class="star">
@@ -162,11 +173,13 @@
                         </div>
                         <h5>$2.30 <strike>$5</strike> <span><i class="fa-solid fa-cart-shopping"></i></span></h5>
                     </div>
+</a>
                 </div>
             </div>
             <div class="col-md-3 py-3 py-md-0">
                 <div class="card">
-                    <img src="/public/imgs/p19.png" alt="">
+                    <a class="text-decoration-none text-dark" href="/clothe.php">
+                    <img class="img-fluid" src="/public/imgs/p19.png" alt="">
                     <div class="card-body">
                         <h3>Men Jacket</h3>
                         <div class="star">
@@ -178,11 +191,13 @@
                         </div>
                         <h5>$3.2 <strike>$5.60</strike> <span><i class="fa-solid fa-cart-shopping"></i></span></h5>
                     </div>
+</a>
                 </div>
             </div>
             <div class="col-md-3 py-3 py-md-0">
                 <div class="card">
-                    <img src="/public/imgs/p20.png" alt="">
+                    <a class="text-decoration-none text-dark" href="/clothe.php">
+                    <img class="img-fluid" src="/public/imgs/p20.png" alt="">
                     <div class="card-body">
                         <h3>Men T-SHirt</h3>
                         <div class="star">
@@ -194,6 +209,7 @@
                         </div>
                         <h5>$10.50 <strike>$15.60</strike> <span><i class="fa-solid fa-cart-shopping"></i></span></h5>
                     </div>
+</a>
                 </div>
             </div>
         </div>
