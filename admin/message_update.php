@@ -40,12 +40,12 @@ if(isset($_GET['edit'])) {
 	<meta name="viewport" content="width=device-width, initial-scale=1.0">
 
 	<!-- Boxicons -->
-	<link href='https://unpkg.com/boxicons@2.0.9/css/boxicons.min.css' rel='stylesheet'>
+	<link href='/public/css/boxicons.min.css' rel='stylesheet'>
 	<!-- My CSS -->
 	<link rel="stylesheet" href="../public/css/admin.css">
     <link rel="stylesheet" href="../public/css/mystore.css">
 	<style>
-		@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@100;200;300;400;500;600&display=swap');
+		@import url('/public/css/css2.css');
 	</style>
 	<title>AdminHub</title>
 </head>
