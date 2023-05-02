@@ -3,6 +3,9 @@
     include 'connect.php';
     include 'components/header.php';
     $sessionuser='';
+    if(!isset($_SESSION['user'])) {
+        header('Location: /');
+    }
     if(isset($_POST['update']) && isset($_SESSION['user'])){
         $sessionuser=$_SESSION['user'];
         $name= filter_input(INPUT_POST,'name',FILTER_SANITIZE_STRING);
@@ -30,13 +33,16 @@
     }
     if(isset($_SESSION['user'])){
         $sessionuser=$_SESSION['user'];
+    $myOrdersSql = "SELECT * from orders where user_id = {$sessionuser['id']}";
+    $result = $conn->query($myOrdersSql);
+    $orders = $result->fetchAll(PDO::FETCH_ASSOC);
 ?>
 
 
 <div class="container rounded bg-white mt-5 mb-5">
     <div class="row">
         <div class="col-md-3 border-right">
-            <div class="d-flex flex-column align-items-center text-center p-3 py-5"><img class="rounded-circle mt-5" width="150px" src="https://st3.depositphotos.com/15648834/17930/v/600/depositphotos_179308454-stock-illustration-unknown-person-silhouette-glasses-profile.jpg"><span class="font-weight-bold"><?= $sessionuser['name'] ?></span><span class="text-black-50"></span><span> </span></div>
+            <div class="d-flex flex-column align-items-center text-center p-3 py-5"><img class="rounded-circle mt-5" width="150px" src="/public/imgs/profile.jpg"><span class="font-weight-bold"><?= $sessionuser['name'] ?></span><span class="text-black-50"></span><span> </span></div>
         </div>
         <div class="col-md-5 border-right">
             <div class="p-3 py-5">
@@ -55,9 +61,23 @@
                 </form>
             </div>
         </div>
-        <div class="col-md-4">
-            <div class="p-3 py-5">
-            </div>
+    </div>
+    <div class="row">
+        <div class="col-sm-12">
+            <h2>Your Orders:</h2>
+            <?php if($orders): ?>
+                <?php foreach($orders as $order): ?>
+                    <div class="mb-3 text-center">
+                        <h3>Total price: <?= $order['price'] ?> </h3>
+                        <h3>Date: <?= $order['date'] ?> </h3>
+                        <h3>Product: <?= $order['productId'] ?> </h3>
+                        <h3>Status: <?php print ($order['status'] ? 'Approved' : 'Pending') ?> </h3>
+                        <h3>Quantity: <?= $order['quantity'] ?> </h3>
+                    </div>
+                <?php endforeach; ?>
+            <?php else: ?>
+                <h3 class="text-center">There is no orders</h3>
+            <?php endif; ?>
         </div>
     </div>
 </div>

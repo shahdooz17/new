@@ -35,7 +35,6 @@
             }
         }
     }
-
     function signup($conn, $name, $email, $password) {
         if(inputFilter($name) && inputFilter($email) && inputFilter($password)) {
             $name = inputFilter($name);
