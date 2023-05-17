@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: May 03, 2023 at 06:19 PM
+-- Generation Time: Apr 30, 2023 at 05:14 PM
 -- Server version: 10.4.27-MariaDB
 -- PHP Version: 8.2.0
 
@@ -55,9 +55,7 @@ CREATE TABLE `messages` (
 --
 
 INSERT INTO `messages` (`id`, `name`, `email`, `number`, `messages`, `date`) VALUES
-(11, 'Shahd Alsayed', 'shahdalsayed20042017@gmail.com', '01158927009', 'kjfgfch', '2023-04-30'),
-(13, 'Shahd Alsayed', 'shahdalsayed20042017@gmail.com', '01158927009', 'hjk', '2023-04-30'),
-(14, 'UUUC', 'CC', '122', 'GOD', '2023-05-01');
+(10, 'Ahmed Aboutaleb', 'iifire005@gmail.com', '234243', 'rfewr', '2023-04-30');
 
 -- --------------------------------------------------------
 
@@ -74,19 +72,6 @@ CREATE TABLE `orders` (
   `status` int(1) NOT NULL DEFAULT 0,
   `quantity` int(11) DEFAULT 1
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
-
---
--- Dumping data for table `orders`
---
-
-INSERT INTO `orders` (`id`, `user_id`, `productId`, `price`, `date`, `status`, `quantity`) VALUES
-(49, 6, 5, 120, '2023-05-01', 0, 1),
-(50, 6, 5, 120, '2023-05-01', 0, 1),
-(51, 6, 6, 90, '2023-05-01', 0, 2),
-(52, 6, 5, 1, '2023-05-01', 0, 1),
-(53, 6, 5, 7, '2023-05-01', 0, 3),
-(54, 6, 5, 6, '2023-05-01', 0, 14),
-(56, 6, 6, 45, '2023-05-03', 0, 1);
 
 -- --------------------------------------------------------
 
@@ -108,9 +93,8 @@ CREATE TABLE `products` (
 --
 
 INSERT INTO `products` (`id`, `name`, `details`, `price`, `rating`, `image`) VALUES
-(5, 'bag', '', 120, 3, 'p5.png'),
-(6, 'men hoodie', '', 45, 5, 'p2.png'),
-(7, 'watch', '', 35, 4, 'nike shoes.png');
+(1, 'watch', 'bla bla', 12, 1, 'topcard1.png'),
+(4, 'dsdsds', '', 23, 2, 'feature_prod_01.jpg');
 
 -- --------------------------------------------------------
 
@@ -131,9 +115,7 @@ CREATE TABLE `users` (
 --
 
 INSERT INTO `users` (`id`, `name`, `email`, `password`, `admin`) VALUES
-(6, 'Shahd Alsayed', 'shahdalsayed20042017@gmail.com', 'aae46cbe4f7207990b2ed1d7cdbb2ecc2a9586d7', 1),
-(7, 'iishahi', 'shahdalsayed460@gmail.com', 'a424dd9e90ad2abae3e7d64e6b2eb63e18bdc57b', 1),
-(8, 'mohamed', 'mohamed@gmail', '40bd001563085fc35165329ea1ff5c5ecbdbbeef', 0);
+(1, 'ahmed', 'iifire005@gmail.com', '114ba4fb31c1cb028f58ae30a210e66cb7e787fc', 1);
 
 --
 -- Indexes for dumped tables
@@ -185,25 +167,25 @@ ALTER TABLE `cart`
 -- AUTO_INCREMENT for table `messages`
 --
 ALTER TABLE `messages`
-  MODIFY `id` int(100) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=15;
+  MODIFY `id` int(100) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=11;
 
 --
 -- AUTO_INCREMENT for table `orders`
 --
 ALTER TABLE `orders`
-  MODIFY `id` int(100) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=57;
+  MODIFY `id` int(100) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=47;
 
 --
 -- AUTO_INCREMENT for table `products`
 --
 ALTER TABLE `products`
-  MODIFY `id` int(100) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=8;
+  MODIFY `id` int(100) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
 
 --
 -- AUTO_INCREMENT for table `users`
 --
 ALTER TABLE `users`
-  MODIFY `id` int(100) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=9;
+  MODIFY `id` int(100) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
 
 --
 -- Constraints for dumped tables
